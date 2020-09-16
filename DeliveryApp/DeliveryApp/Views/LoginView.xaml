@@ -1,0 +1,104 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:d="http://xamarin.com/schemas/2014/forms/design"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:helpers="clr-namespace:DeliveryApp.Helpers"
+             xmlns:vm="clr-namespace:DeliveryApp.ViewModels"
+             xmlns:behaviors="clr-namespace:DeliveryApp.Behaviors"
+             xmlns:converters="clr-namespace:DeliveryApp.Converter"
+             mc:Ignorable="d"
+             Visual="Material"
+             x:Class="DeliveryApp.Views.LoginView">
+    <ContentPage.Resources>
+        <ResourceDictionary>
+            <converters:TextToBoolConverter x:Key="DataConverter" />
+        </ResourceDictionary>
+    </ContentPage.Resources>
+    
+    <ContentPage.BindingContext>
+        <vm:LoginViewModel/>
+    </ContentPage.BindingContext>
+    
+    <ContentPage.Content>
+        <Grid>
+            <MediaElement Source="ms-appx:///cook.mp4"  AutoPlay="True" HorizontalOptions="FillAndExpand"  Aspect="Fill"
+                         VerticalOptions="FillAndExpand" IsLooping="True"/>
+            <Grid Padding="20" VerticalOptions="Center" Opacity="0.6">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto"/>
+                <RowDefinition Height="*"/>
+            </Grid.RowDefinitions>
+            <StackLayout>
+                    <Label Text="Buger Queen" FontFamily="CabinSketch" TextColor="White" FontAttributes="Bold" FontSize="60" HorizontalOptions="Center"/>
+                    <Label Text="Login Form" FontFamily="CabinSketch" TextColor="Purple" FontSize="40" HorizontalOptions="Center" />
+                
+            </StackLayout>
+                
+            <StackLayout  Grid.Row="1" Spacing="10">
+                    <Frame CornerRadius="20">
+                        <StackLayout Orientation="Horizontal">
+                            <Image Source="{FontImage FontFamily=FontAwesome, Glyph={x:Static helpers:IconFont.AccountCircle}, Color=Black , Size=30 }"   
+                                   HorizontalOptions="Start" BackgroundColor="Transparent"/>
+
+                            <Entry x:Name="EntryUsername" Placeholder="Entrer le nom d'utilisateur"
+                                   Text="{Binding Username}" HorizontalOptions="FillAndExpand">
+                                <Entry.Behaviors>
+                                    <behaviors:NotNullBehavior x:Name="UsernameNN"/>
+                                </Entry.Behaviors>
+                            </Entry>      
+                        </StackLayout>
+                    </Frame>
+                    <Frame CornerRadius="20">
+                        <StackLayout Orientation="Horizontal">
+                            <Image Source="{FontImage FontFamily=FontAwesome, Glyph={x:Static helpers:IconFont.Lock}, Color=Black , Size=30 }"   
+                                   HorizontalOptions="Start" BackgroundColor="Transparent"/>
+
+                            <Entry x:Name="EntryPassword"  Placeholder="Entrer le mot de passe"
+                                   Text="{Binding Passeword}" IsPassword="True"
+                                   BackgroundColor="Transparent" HorizontalOptions="FillAndExpand" >
+                                <Entry.Behaviors>
+                                    <behaviors:NotNullBehavior x:Name="PasswordNN" />
+                                </Entry.Behaviors>
+                            </Entry>
+                        </StackLayout>
+                    </Frame>
+
+
+                    <Button Text="Login" HorizontalOptions="Center" BackgroundColor="Purple" 
+                        TextColor="White" WidthRequest="200" HeightRequest="60" CornerRadius="20"
+                        Command="{Binding LoginCommand}" IsEnabled="{Binding Disable}">
+                    <Button.Triggers>
+                        <MultiTrigger TargetType="Button" >
+                                <MultiTrigger.Conditions >
+                                    <BindingCondition Binding="{Binding Source={x:Reference EntryUsername},  Path=Text,
+                                        Converter={StaticResource DataConverter} }"
+                                                      Value="True" />
+                                    <BindingCondition Binding="{Binding Source={x:Reference EntryPassword} ,Path=Text, Converter={x:StaticResource DataConverter}}"
+                                                      Value="True"/>
+                                </MultiTrigger.Conditions>
+                                <Setter Property="IsEnabled" Value="True"/>
+                            </MultiTrigger>
+                        </Button.Triggers>
+                    </Button>
+                <Label Text="New Users :" TextColor="White" FontAttributes="Bold"/>
+                    <StackLayout Orientation="Horizontal">
+                        <CheckBox x:Name="CheckBoxAgree" VerticalOptions="Center" IsChecked="True" />
+                        <Label Text="I agree" TextColor="White" VerticalOptions="Center" FontAttributes="Bold"/>
+
+                    </StackLayout>
+                    <Button Text="S'enregistrer" HorizontalOptions="Center" BackgroundColor="DarkOrange"
+                        TextColor="White" WidthRequest="200" HeightRequest="60" CornerRadius="20"
+                        Command="{Binding RegisterCommand}" >
+                        <Button.Triggers>
+                            <DataTrigger TargetType="Button" Binding="{Binding Source={x:Reference CheckBoxAgree}, Path=IsChecked}" Value="False" >
+                                <Setter Property="IsEnabled" Value="False"/>
+                            </DataTrigger>
+                        </Button.Triggers>
+                    </Button>
+                </StackLayout>
+        </Grid>
+
+        </Grid>
+    </ContentPage.Content>
+</ContentPage>

@@ -1,0 +1,49 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:d="http://xamarin.com/schemas/2014/forms/design"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             mc:Ignorable="d"
+              xmlns:helpers="clr-namespace:DeliveryApp.Helpers" 
+             xmlns:ios="clr-namespace:Xamarin.Forms.PlatformConfiguration.iOSSpecific;assembly=Xamarin.Forms.Core"
+             ios:Page.UseSafeArea="True" NavigationPage.HasNavigationBar="False"
+             xmlns:pancake="clr-namespace:Xamarin.Forms.PancakeView;assembly=Xamarin.Forms.PancakeView" 
+             xmlns:vm="clr-namespace:DeliveryApp.ViewModels"
+             Visual="Material"
+             x:Class="DeliveryApp.Views.OrdersView">
+    <ContentPage.Content>
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="100" />
+                <RowDefinition Height="*" />
+            </Grid.RowDefinitions>
+
+            <ImageButton Source="{FontImage FontFamily=FontAwesome,
+                Glyph={x:Static helpers:IconFont.ArrowLeft},Size=30, Color=White}"
+                Grid.Row="0" HorizontalOptions="Start" Aspect="AspectFit"
+                VerticalOptions="Start" Margin="10,30" Clicked="ImageButton_Clicked" />
+
+            <Label Text="Burger Queen" FontSize="40" TextColor="WhiteSmoke"
+                   FontFamily="CabinSketch" HorizontalOptions="Center" VerticalOptions="Start" />
+
+            <Label x:Name="LabelName" FontSize="Subtitle" Margin="20,0" TextColor="WhiteSmoke"
+                   HorizontalOptions="Center" VerticalOptions="End" />
+
+            <pancake:PancakeView BackgroundColor="WhiteSmoke" CornerRadius="60,60,0,0"
+                                 Grid.Row="1">
+                <StackLayout HorizontalOptions="Center" VerticalOptions="Center">
+                    <Label Text="Thanks for placing an order with us." />
+                    <Label Text="Please note down your Order ID for further Tracking" />
+                    <Label x:Name="LabelOrderID" TextColor="Purple"
+                           FontSize="Subtitle" />
+
+                    <Button Text="Voir tous les produits" x:Name="voirProduits"
+                            WidthRequest="200"
+                            BackgroundColor="Purple"
+                            HorizontalOptions="Center"
+                            CornerRadius="20" Clicked="voirProduits_Clicked" />
+                </StackLayout>
+            </pancake:PancakeView>
+        </Grid>
+    </ContentPage.Content>
+</ContentPage>

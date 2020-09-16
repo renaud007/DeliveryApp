@@ -1,0 +1,63 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:d="http://xamarin.com/schemas/2014/forms/design"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             mc:Ignorable="d"
+             xmlns:helpers="clr-namespace:DeliveryApp.Helpers" 
+             xmlns:ios="clr-namespace:Xamarin.Forms.PlatformConfiguration.iOSSpecific;assembly=Xamarin.Forms.Core"
+             ios:Page.UseSafeArea="True" NavigationPage.HasNavigationBar="False"
+             xmlns:pancake="clr-namespace:Xamarin.Forms.PancakeView;assembly=Xamarin.Forms.PancakeView" 
+             xmlns:vm="clr-namespace:DeliveryApp.ViewModels"
+             Visual="Material"
+             x:Class="DeliveryApp.Views.LogoutView">
+    <ContentPage.BindingContext>
+        <vm:LogoutViewModel/>
+    </ContentPage.BindingContext>
+    <ContentPage.Content>
+        <Grid BackgroundColor="Green">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="100" />
+                <RowDefinition Height="*" />
+            </Grid.RowDefinitions>
+
+            <ImageButton Source="{FontImage FontFamily=FontAwesome,
+                Glyph={x:Static helpers:IconFont.ArrowLeft},Size=30, Color=White}"
+                Grid.Row="0" HorizontalOptions="Start" Aspect="AspectFit"
+                VerticalOptions="Start" Margin="10,30"  Clicked="ImageButton_Clicked"/>
+         
+
+            <Label Text="Burger Queen" FontSize="40"  
+                   FontFamily="CabinSketch" HorizontalOptions="Center" VerticalOptions="Start" />
+
+            <Label x:Name="LabelName" FontSize="Subtitle" Margin="20,0"  
+                   HorizontalOptions="Center" VerticalOptions="End" />
+
+            <pancake:PancakeView BackgroundColor="WhiteSmoke" 
+                                CornerRadius="60,60,0,0"
+                                Grid.Row="1">
+                <StackLayout HorizontalOptions="Center" VerticalOptions="Center">
+                    <StackLayout IsVisible="{Binding IsCartExists}">
+                        <Label Text="Cart, is not empty!" TextColor="Black" />
+                        <Label Text="{Binding UserCartItemsCount, StringFormat='Your Cart Contains {0} items'}"
+                              TextColor="{DynamicResource ContextTextColor}"/>
+                    </StackLayout>
+
+                    <StackLayout>
+                        <Label Text="Are you sure you wanted to logout ?" TextColor="Black" />
+                        <StackLayout Orientation="Horizontal" Spacing="10">
+                            <Button Text="Yes, Logout" HorizontalOptions="Center"
+                                   BackgroundColor="Red"
+                                
+                                   Command="{Binding LogoutCommand}" />
+
+                            <Button Text="No, Go To Cart" HorizontalOptions="Center"
+                                    CornerRadius="20" BackgroundColor="LightGreen"
+                                    Command="{Binding GotoCartCommand}" />
+                        </StackLayout>
+                    </StackLayout>
+                </StackLayout>
+            </pancake:PancakeView>
+        </Grid>
+    </ContentPage.Content>
+</ContentPage>
